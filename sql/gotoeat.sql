@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.5.6-MariaDB)
 # Database: gotoeat
-# Generation Time: 2020-12-12 11:33:35 +0000
+# Generation Time: 2020-12-13 02:28:23 +0000
 # ************************************************************
 
 
@@ -28,7 +28,8 @@ CREATE TABLE `details` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `page_id` int(11) DEFAULT NULL,
   `name` varchar(1000) DEFAULT NULL,
-  `postal_code` int(11) DEFAULT NULL,
+  `review_count` int(11) DEFAULT NULL,
+  `postal_code` varchar(50) DEFAULT NULL,
   `image_url` varchar(2047) CHARACTER SET latin1 DEFAULT NULL,
   `homepage_url` varchar(2047) CHARACTER SET latin1 DEFAULT NULL,
   `phone_number` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
@@ -61,6 +62,9 @@ CREATE TABLE `pages` (
   `name` varchar(63) DEFAULT NULL,
   `restaurant_url` varchar(2047) CHARACTER SET latin1 DEFAULT NULL,
   `html` longtext DEFAULT NULL,
+  `genre` varchar(100) DEFAULT NULL,
+  `rating_score` float DEFAULT NULL,
+  `review_count` int(11) DEFAULT 0,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
