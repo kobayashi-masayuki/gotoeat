@@ -11,7 +11,7 @@ def crawl_detail_url(page)
   page.update(html: html)
 end
 
-ids = Page.where(crawl_status: 1).pluck(:id)
+ids = Page.where(crawl_status: 0).where(rating_score: 3.6..Float::INFINITY).where(review_count: 100..Float::INFINITY).pluck(:id)
 ids.each do |id|
   begin
     page = Page.find(id)
