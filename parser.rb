@@ -30,6 +30,7 @@ def parse(page_rec)
   restaurant_info = {}
   restaurant_info[:page_id] = page_rec.id
   restaurant_info[:name] = doc.at_css('.display-name span').text.strip
+  restaurant_info[:review_count] = page_rec.review_count
   restaurant_info[:postal_code] = postal_code(doc)
   restaurant_info[:image_url] = doc.at_css("meta[property='og:image']").attribute('content').text
   restaurant_info[:homepage_url] = doc.at_css('.homepage a')[:href] if doc.at_css('.homepage')
@@ -39,7 +40,7 @@ def parse(page_rec)
   restaurant_info[:genre1] = doc.css('.linktree__parent-target-text')[2]&.text&.strip
   restaurant_info[:genre2] = doc.css('.linktree__parent-target-text')[3]&.text&.strip
   restaurant_info[:genre3] = doc.css('.linktree__parent-target-text')[4]&.text&.strip
-  restaurant_info[:rating_score] = doc.at_css('.rdheader-rating__score-val-dtl').text
+  restaurant_info[:rating_score] = page_rec.rating_score
   restaurant_info[:budget__price_lunch] = doc.css('.rdheader-budget__price-target')[1].text
   restaurant_info[:budget__price_dinner] = doc.css('.rdheader-budget__price-target')[0].text
   restaurant_info[:station] = doc.css('.linktree__parent-target-text')[0].text
@@ -52,7 +53,7 @@ end
 ids = Page.where(crawl_status: 2, parse_status: 0).pluck(:id)
 ids.each do |id|
   page_rec = Page.find(id)
-  # page_rec.update(parse_status: 1)
+  page_rec.update(parse_status: 1)
   begin
     restaurant_info = parse(page_rec)
     Detail.create(restaurant_info)
